@@ -4,5 +4,4 @@ __pycache__/
 *.exe
 *.csv
 *.ini
-!WtViewer.exe
 !tmctl.dll
