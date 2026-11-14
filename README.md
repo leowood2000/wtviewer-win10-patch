@@ -2,6 +2,11 @@
 
 在 Windows 10 22H2 x64 上修复横河 WTViewer 8.24 通过 Agilent 82357B 采集 WT210 普通测量数据时遇到的 Start 无读数和 Stop 卡死问题。需要已有的 WTViewer 安装和可用的 GPIB 环境。
 
+仓库直接提供两个已修补的二进制，复制到你的 WTViewer 副本目录替换同名文件即可，也可用脚本从原版自行生成。两个二进制版权归横河电机所有，仅托管用于互操作目的的修补版；原版可从横河官网下载。替换前先关闭 WTViewer。
+
+- `WtViewer.exe` — Auto Ranging 显示修复（SHA-256 `085598c781e62756c894b223ddd9fdf33e4dfa48f4fe6de58848c0f497c68ec1`）。主程序文件名可自定，本机副本更名为 `WTViewerWin10.exe` 运行。
+- `tmctl.dll` — GPIB 取样修复（SHA-256 `40bb4a7dfc1314bdf38b20faeb50806625498974e09cbd696f10811f5791b532`）。
+
 ## 生成和使用
 
 1. 将现有 WTViewer 安装目录完整复制到可写目录，例如 `C:\WTViewerWin10`。
@@ -35,7 +40,7 @@ WT210 直连输入没有这层 0.01，电流轴因此缩小 100 倍。电压路�
 py .\wt-patch-autoscale.py "C:\Program Files (x86)\Yokogawa\WTViewer\WtViewer.exe" "C:\WTViewerWin10\WtViewer.exe"
 ```
 
-适配 SHA-256 为 `ebc1ce26fb83a6c781d2d37e6acc862376e5ee26e1da1b67055f6e4de6f15c11` 的 `WtViewer.exe`（WTViewer 8.24）。替换文件前先关闭正在运行的 WTViewer。
+适配 SHA-256 为 `ebc1ce26fb83a6c781d2d37e6acc862376e5ee26e1da1b67055f6e4de6f15c11` 的原版 `WtViewer.exe`（WTViewer 8.24）；仓库根目录的 `WtViewer.exe` 已含此补丁。替换文件前先关闭正在运行的 WTViewer。
 
 **验证**（实机 WT210，300 V 手动量程 / 0.5 A AUTO，谐波测量模式）：补丁后 Auto Ranging ON 时 I1 轴显示 ±1.500 A（补丁前 ±15.00m），V1 轴 ±900.0 不变；电压、电流、功率、PF、THD 等测量数据与补丁前一致。
 
